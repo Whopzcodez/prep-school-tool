@@ -1,0 +1,46 @@
+# Secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Harness auth/private state
+auth.json
+**/auth.json
+
+# JavaScript
+node_modules/
+.next/
+dist/
+build/
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+
+# Logs/temp/cache
+*.log
+tmp/
+temp/
+.cache/
+
+# Local model files
+*.gguf
+*.safetensors
+*.ckpt
+*.pt
+*.pth
+
+# Potentially large generated artifacts
+artifacts/test-results/*
+artifacts/benchmarks/*
+!artifacts/test-results/.gitkeep
+!artifacts/benchmarks/.gitkeep
