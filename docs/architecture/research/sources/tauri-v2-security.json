@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "recordId": "tauri-v2-security",
+  "title": "Tauri v2 capabilities and permissions security",
+  "recordType": "RESEARCH",
+  "status": "RESEARCH",
+  "decisionStatus": "NOT_ACCEPTED",
+  "retrievedOn": "2026-08-11",
+  "provider": "Context7",
+  "library": {
+    "id": "/tauri-apps/tauri-docs",
+    "branch": "v2",
+    "official": true
+  },
+  "researchRecord": "../2026-08-11-tauri-v2-security.md",
+  "sourceDocuments": [
+    "https://github.com/tauri-apps/tauri-docs/blob/v2/src/content/docs/security/capabilities.mdx",
+    "https://github.com/tauri-apps/tauri-docs/blob/v2/src/content/docs/blog/tauri-2.0.mdx",
+    "https://github.com/tauri-apps/tauri-docs/blob/v2/src/content/docs/blog/tauri-2-0-0-beta.md",
+    "https://github.com/tauri-apps/tauri-docs/blob/v2/src/content/docs/blog/tauri-2-0-0-release-candidate.mdx",
+    "https://github.com/tauri-apps/tauri-docs/blob/v2/packages/tauri/crates/tauri/src/webview/mod.rs",
+    "https://github.com/tauri-apps/tauri-docs/blob/v2/src/content/docs/security/csp.mdx",
+    "https://github.com/tauri-apps/tauri-docs/blob/v2/src/content/docs/plugin/shell.mdx",
+    "https://github.com/tauri-apps/tauri-docs/blob/v2/src/content/docs/plugin/http-client.mdx",
+    "https://github.com/tauri-apps/tauri-docs/blob/v2/src/content/docs/develop/resources.mdx",
+    "https://github.com/tauri-apps/tauri-docs/blob/v2/src/content/docs/learn/sidecar-nodejs.mdx"
+  ],
+  "keyFindings": [
+    "Tauri v2 combines command permissions, resource or parameter scopes, and window or webview capabilities.",
+    "IPC authorization considers the command, window, webview, and local or remote origin before invocation.",
+    "Remote content cannot reach custom commands without an explicit remote capability.",
+    "Command implementations remain responsible for interpreting and enforcing attached scopes.",
+    "Filesystem, HTTP, shell, and sidecar authority can be narrowed, while CSP provides complementary frontend defense.",
+    "Tauri ACL is not an OS sandbox or a replacement for application authorization and workload isolation."
+  ],
+  "prepSchoolImplications": [
+    "Separate capability roles by exact window and webview labels.",
+    "Keep privileged webviews local and avoid remote capabilities by default.",
+    "Expose typed semantic lab commands instead of arbitrary host primitives.",
+    "Enforce authentication, session policy, interview integrity, and resource isolation in trusted shared logic and the local-lab agent.",
+    "Use per-session filesystem and network scopes, exact sidecars, restrictive CSP, and explicit recording consent.",
+    "Test both capability manifests and native out-of-scope rejection in CI."
+  ],
+  "openQuestions": [
+    "Whether PrepSchool should adopt Tauri at all.",
+    "What minimum typed command surface the desktop client needs.",
+    "What local transport and per-session authentication model the agent should use.",
+    "What OS-level sandboxing is required on each supported platform.",
+    "How to prevent symlink and parent-directory escapes in user-selected path scopes.",
+    "Which plugin default permissions, if any, are acceptable.",
+    "How capability drift will be detected during upgrades."
+  ],
+  "rawResponseRetained": false
+}
