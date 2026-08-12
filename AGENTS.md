@@ -13,6 +13,7 @@ These are the product source of truth.
 - Keep business logic outside UI clients where possible.
 - Add tests with behavioral changes.
 - Keep interfaces schema-driven and typed.
+- AI agents are development tools and must not receive commit authorship or co-authorship attribution. Commits are authored by the human contributor responsible for reviewing and submitting the change. Do not add AI-agent `Co-authored-by` trailers or agent authorship metadata.
 
 ## Four first-class tracks
 - Software Engineering
