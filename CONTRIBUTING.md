@@ -33,7 +33,9 @@ Issue / ticket
 
 ## Pull requests
 
-- Keep each PR focused on one coherent ticket or outcome.
+- Keep each commit and PR small enough for a human to review confidently and focused on one coherent ticket or outcome.
+- Split large agent-generated changes into logical, independently reviewable increments when practical; agents must not combine massive unrelated diffs in one PR.
+- Inherently large artifacts, such as canonical licenses or justified generated files, are acceptable exceptions. Use reviewer judgment rather than an arbitrary universal line-count limit.
 - Explain changes, non-goals, validation, security/privacy impact, architecture impact, and the areas needing review.
 - Separate unrelated refactors from behavioral or architectural changes.
 - Add tests for behavioral changes.
