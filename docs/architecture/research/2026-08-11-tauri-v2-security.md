@@ -65,10 +65,28 @@ Tauri supports a restrictive Content Security Policy for frontend resources and 
 
 These are recommendations for later architecture work, not accepted decisions.
 
+### Future agent execution boundary
+
+Tauri capabilities are primarily a security boundary for desktop webview-to-native IPC. They can narrow which desktop surfaces may invoke local commands, but they should not become PrepSchool's authority for provisioning arbitrary whole servers or granting unrestricted remote shell access.
+
+Future agent execution environments may include containers, VMs, GPU hosts, or dedicated server workspaces. A Tauri client may let a user request and approve an environment, observe its provisioning progress and resource usage, start or stop it, or connect to it. This lets the desktop expose the workflow without owning the underlying authorization policy.
+
+If PrepSchool introduces remote agent environments, a separate PrepSchool agent/lab control plane should eventually own authorization, provisioning, and resource lifecycle. Its policy model should include:
+
+- capability grants;
+- resource quotas;
+- time and lease limits;
+- session ownership;
+- audit logging;
+- explicit lifecycle state, including provisioning and readiness so deployment time is visible; and
+- human approval for privileged operations.
+
+Tauri would remain one client-side enforcement layer: it may constrain which control-plane operations a desktop surface can request, while the control plane independently authorizes and records the operation. This is a future architectural recommendation only. It does not select an implementation, cloud provider, or orchestration platform.
+
 1. **Use least-privilege capability roles.** If PrepSchool adopts Tauri, separate candidate workspace, lab configuration, playback, authentication/update, and privileged administration surfaces by exact window/webview labels rather than sharing one broad default capability.
 2. **Keep privileged webviews local.** Do not load remote content into a webview that can invoke local-lab commands. Any remote capability should be exceptional, origin-specific, and minimal.
-3. **Expose semantic commands, not host primitives.** Prefer typed operations such as starting a session sandbox or collecting scoped telemetry over arbitrary shell, process, filesystem, Docker socket, or HTTP access.
-4. **Treat the local-lab agent as a policy boundary.** It should independently authenticate requests and enforce session ownership, allowed operation, phase, path, process, network, and resource limits. Tauri ACL should only narrow which requests the UI can make.
+3. **Expose semantic commands, not host primitives.** Prefer typed operations such as requesting a session environment or collecting scoped telemetry over arbitrary shell, process, filesystem, Docker socket, or HTTP access.
+4. **Keep policy outside the desktop client.** A local-lab agent should independently authenticate local requests and enforce session ownership, allowed operation, phase, path, process, network, and resource limits. A future remote control plane should provide the corresponding authority for remote environments. Tauri ACL should only narrow which requests the UI can make.
 5. **Preserve server-controlled interview integrity.** Clock and phase transitions, hint eligibility, solution locking, score changes, and sandbox policy must remain in shared trusted application/domain logic rather than capability configuration or frontend state.
 6. **Scope filesystem access per session.** Restrict access to the active workspace, explicitly imported repositories, packaged read-only resources, and consented ephemeral recording locations. Exclude credentials, harness authentication, unrelated repositories, and user configuration by default.
 7. **Avoid general-purpose shell execution.** Prefer a bundled, versioned sidecar with structured requests. Avoid `sh -c`, PowerShell command strings, arbitrary executable paths, and permissive argument regexes.
@@ -88,6 +106,9 @@ These are recommendations for later architecture work, not accepted decisions.
 8. Which official plugin `default` permission sets are acceptable, and should PrepSchool avoid defaults in favor of explicit command permissions?
 9. What automated checks will detect capability drift when Tauri or plugins are upgraded?
 10. Should remote documentation be opened in the system browser rather than any application webview?
+11. Where should the trust boundary fall between local-lab agents and a future remote agent/lab control plane?
+12. How should clients present provisioning time, readiness, quota and lease status, resource usage, and failures without becoming authoritative for those states?
+13. Which privileged lifecycle operations require human approval, and how should that approval be bound to a user, session, and audit record?
 
 ## Status and next step
 
